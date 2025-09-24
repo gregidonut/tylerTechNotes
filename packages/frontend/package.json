@@ -9,6 +9,8 @@
         "astro": "astro"
     },
     "dependencies": {
+        "@clerk/astro": "^2.13.2",
+        "@clerk/themes": "^2.4.21",
         "@typescript-eslint/parser": "^8.44.1",
         "astro": "^5.13.10",
         "astro-compressor": "^1.1.2",

@@ -9,6 +9,14 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "ClerkPublicKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "ClerkSecretKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "FeAcmCertArn": {
       "type": "sst.sst.Secret"
       "value": string
