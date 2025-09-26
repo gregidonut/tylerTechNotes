@@ -9,6 +9,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "ClerkFeDomain": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "ClerkPublicKey": {
       "type": "sst.sst.Secret"
       "value": string
@@ -24,6 +28,10 @@ declare module "sst" {
     "Frontend": {
       "type": "sst.aws.Astro"
       "url": string
+    }
+    "SupabaseKey": {
+      "type": "sst.sst.Secret"
+      "value": string
     }
   }
 }
