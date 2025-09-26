@@ -11,7 +11,7 @@ export const frontend = new sst.aws.Astro("Frontend", {
   link: [ASTRO_APP_DOMAIN, FE_ACM_CERT_ARN, supabaseKey],
   environment: {
     SST_STAGE: $app.stage,
-    ASTRO_SITE: `https://${ASTRO_APP_DOMAIN.value}`,
+    ASTRO_SITE: ASTRO_APP_DOMAIN.value,
     PUBLIC_CLERK_PUBLISHABLE_KEY: clerkPublic.value,
     CLERK_SECRET_KEY: clerkSecret.value,
     CLERK_SIGN_IN_URL: "/sign-in",
