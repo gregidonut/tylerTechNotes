@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Main from "@/components/main/Main.astro";
+
+const { tenantName = "tyler-tech" } = Astro.props;
+---
+
+<Layout>
+    <Header />
+    <Main
+        ><header>
+            <h2>tickets system <strong>{tenantName}</strong></h2>
+        </header></Main
+    >
+</Layout>
