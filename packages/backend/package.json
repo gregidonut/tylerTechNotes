@@ -1,0 +1,16 @@
+{
+  "name": "@tyler-tech-notes/backend",
+  "type": "module",
+  "version": "0.0.1",
+  "dependencies": {
+    "sst": "*"
+  },
+  "scripts": {
+    "shell": "sst shell tsx"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "supabase": "^2.45.5",
+    "tsx": "^4"
+  }
+}
