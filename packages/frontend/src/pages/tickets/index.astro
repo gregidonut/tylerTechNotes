@@ -3,14 +3,20 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
+import TicketList from "./_components/ticketList/TicketList";
+import styles from "./index.module.css";
+
 const { tenantName = "tyler-tech" } = Astro.props;
 ---
 
 <Layout>
     <Header />
     <Main>
-        <header>
+        <header class={styles.innerHeader}>
             <h2>tickets system <strong>{tenantName}</strong></h2>
         </header>
+        <main class={styles.innerMain}>
+            <TicketList client:idle />
+        </main>
     </Main>
 </Layout>
