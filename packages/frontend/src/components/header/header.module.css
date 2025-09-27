@@ -18,3 +18,12 @@
     flex-direction: row;
     gap: 0.5rem;
 }
+
+.userButtonContainer {
+    height: 1.75rem;
+    width: 1.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
