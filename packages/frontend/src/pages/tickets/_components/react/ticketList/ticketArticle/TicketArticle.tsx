@@ -10,7 +10,9 @@ export default function TicketArticle({
     return (
         <article className={styles.article}>
             <header>
-                <h3>{t.title}</h3>
+                <h3>
+                    <a href={`tickets/details/${t.id}`}>{t.title}</a>
+                </h3>
                 <strong
                     className={(function () {
                         switch (t.status) {

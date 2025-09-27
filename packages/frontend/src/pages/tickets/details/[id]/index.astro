@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Main from "@/components/main/Main.astro";
+
+import InnerHeader from "../../_components/innerHeader/InnerHeader.astro";
+import InnerMain from "../../_components/innerMain/InnerMain.astro";
+const { id } = Astro.params;
+---
+
+<Layout>
+    <Header />
+    <Main>
+        <InnerHeader>
+            <h2>Ticket details page with id=<strong>{id}</strong></h2>
+        </InnerHeader>
+        <InnerMain />
+    </Main>
+</Layout>

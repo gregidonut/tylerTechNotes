@@ -3,8 +3,10 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
-import TicketList from "./_components/ticketList/TicketList";
-import styles from "./index.module.css";
+import InnerHeader from "./_components/innerHeader/InnerHeader.astro";
+import InnerMain from "./_components/innerMain/InnerMain.astro";
+
+import TicketList from "./_components/react/ticketList/TicketList";
 
 const { tenantName = "tyler-tech" } = Astro.props;
 ---
@@ -12,11 +14,11 @@ const { tenantName = "tyler-tech" } = Astro.props;
 <Layout>
     <Header />
     <Main>
-        <header class={styles.innerHeader}>
+        <InnerHeader>
             <h2>tickets system <strong>{tenantName}</strong></h2>
-        </header>
-        <main class={styles.innerMain}>
+        </InnerHeader>
+        <InnerMain>
             <TicketList client:idle />
-        </main>
+        </InnerMain>
     </Main>
 </Layout>
