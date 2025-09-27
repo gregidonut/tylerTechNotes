@@ -8,7 +8,15 @@ import InnerMain from "./_components/innerMain/InnerMain.astro";
 
 import TicketList from "./_components/react/ticketList/TicketList";
 
+import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
+
 const { tenantName = "tyler-tech" } = Astro.props;
+
+(async function () {
+    const supabase = getSupabaseBrowserClient(Astro);
+    const result = await supabase.storage.listBuckets();
+    console.log(result);
+})();
 ---
 
 <Layout>

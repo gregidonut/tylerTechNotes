@@ -12,7 +12,7 @@ const postauth = defineMiddleware(async function (_, next) {
     return response;
 });
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
 
 export const onRequest = sequence(
     preauth,

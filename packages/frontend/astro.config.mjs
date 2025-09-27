@@ -10,13 +10,19 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
     site: import.meta.env.ASTRO_SITE,
-    integrations: [compressor(), clerk({
-        appearance: {
-            baseTheme: [shadesOfPurple],
-        },
-    }), react()],
+    integrations: [
+        compressor(),
+        clerk({
+            appearance: {
+                baseTheme: [shadesOfPurple],
+            },
+            signInForceRedirectUrl: "/tickets",
+        }),
+        react(),
+    ],
     output: "server",
     adapter: aws({
         responseMode: "stream",
     }),
 });
+

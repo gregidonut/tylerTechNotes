@@ -1,5 +1,5 @@
 ---
-import { SignedIn, UserButton } from "@clerk/astro/components";
+import { SignedOut, SignedIn, UserButton } from "@clerk/astro/components";
 import styles from "./header.module.css";
 ---
 
@@ -26,4 +26,7 @@ import styles from "./header.module.css";
             </ul>
         </nav>
     </SignedIn>
+    <SignedOut>
+        <a href="/sign-in">Sign in</a>
+    </SignedOut>
 </header>
