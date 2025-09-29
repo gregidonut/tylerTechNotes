@@ -1,4 +1,6 @@
 import React from "react";
+import { useStore } from "@nanostores/react";
+import { $authStore } from "@clerk/astro/client";
 import {
     QueryClient,
     QueryClientProvider,
@@ -11,8 +13,15 @@ import TicketArticle from "./ticketArticle/TicketArticle";
 import { type Ticket } from "@/pages/api/tickets/ticket";
 
 function TicketList(): React.JSX.Element {
+    const { userId, orgId } = useStore($authStore);
     const { data, isLoading, isError, error } = useQuery<Ticket[]>({
-        queryKey: ["tickets"],
+        queryKey: [
+            "tickets",
+            {
+                userId,
+                orgId,
+            },
+        ],
         queryFn,
     });
     if (isLoading) {
