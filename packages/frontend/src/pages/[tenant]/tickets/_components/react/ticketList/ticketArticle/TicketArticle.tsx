@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ticketArticle.module.css";
-import { type Ticket, TicketStatus } from "@/pages/api/getTickets/ticket";
+import { type Ticket } from "@/pages/api/tickets/ticket";
 
 export default function TicketArticle({
     ticketData: t,
@@ -11,16 +11,16 @@ export default function TicketArticle({
         <article className={styles.article}>
             <header>
                 <h3>
-                    <a href={`tickets/details/${t.id}`}>{t.title}</a>
+                    <a href={`tickets/details/${t.ticket_id}`}>{t.title}</a>
                 </h3>
                 <strong
                     className={(function () {
                         switch (t.status) {
-                            case TicketStatus.Done:
+                            case "closed":
                                 return styles.done;
-                            case TicketStatus.InProgress:
+                            case "in_progress":
                                 return styles.inProg;
-                            case TicketStatus.NotStarted:
+                            case "open":
                                 return styles.noStart;
                         }
                     })()}
