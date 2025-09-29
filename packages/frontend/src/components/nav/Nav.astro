@@ -1,0 +1,29 @@
+---
+import { SignedIn, OrganizationSwitcher } from "@clerk/astro/components";
+import styles from "./nav.module.css";
+---
+
+<SignedIn>
+    <nav class={styles.nav}>
+        <div class={styles.organizationSwitcherContainer}>
+            <OrganizationSwitcher
+                appearance={{
+                    elements: {
+                        rootBox: styles.organizationSwitcher,
+                    },
+                }}
+            />
+        </div>
+        <ul>
+            <li>
+                <a href="/tickets">Tickets</a>
+            </li>
+            <li>
+                <a href="/tickets/new">Create</a>
+            </li>
+            <li>
+                <a href="/tickets/users">Users</a>
+            </li>
+        </ul>
+    </nav>
+</SignedIn>

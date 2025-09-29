@@ -1,34 +1,25 @@
 ---
 import { SignedOut, SignedIn, UserButton } from "@clerk/astro/components";
+import Nav from "@/components/nav/Nav.astro";
 import styles from "./header.module.css";
+
+const { title } = Astro.props;
 ---
 
 <header class={styles.header}>
-    <h1>
-        <a href="/">my Tyler-Tech notes</a>
-    </h1>
+    <main>
+        <h1>
+            <a href="/">my Tyler-Tech notes</a>
+        </h1>
 
-    <SignedIn>
-        <nav class={styles.nav}>
-            <ul>
-                <li>
-                    <a href="/tickets">Tickets</a>
-                </li>
-                <li>
-                    <a href="/tickets/new">Create</a>
-                </li>
-                <li>
-                    <a href="/tickets/users">Users</a>
-                </li>
-                <li>
-                    <div class={styles.userButtonContainer}>
-                        <UserButton />
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </SignedIn>
-    <SignedOut>
-        <a href="/sign-in">Sign in</a>
-    </SignedOut>
+        <SignedIn>
+            <div class={styles.userButtonContainer}>
+                <UserButton />
+            </div>
+        </SignedIn>
+        <SignedOut>
+            <a href="/sign-in">Sign in</a>
+        </SignedOut>
+    </main>
+    <Nav title={title} />
 </header>

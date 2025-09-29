@@ -10,8 +10,6 @@ import TicketList from "./_components/react/ticketList/TicketList";
 
 import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
 
-const { tenantName = "tyler-tech" } = Astro.props;
-
 (async function () {
     const supabase = getSupabaseBrowserClient(Astro);
     const result = await supabase.storage.listBuckets();
@@ -23,7 +21,7 @@ const { tenantName = "tyler-tech" } = Astro.props;
     <Header />
     <Main>
         <InnerHeader>
-            <h2>tickets system <strong>{tenantName}</strong></h2>
+            <h2>tickets system</h2>
         </InnerHeader>
         <InnerMain>
             <TicketList client:idle />
