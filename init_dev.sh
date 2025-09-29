@@ -4,7 +4,7 @@ supabase_start=$(cd packages/backend && \
     bun run shell src/sb start --stage dev | tee >(cat >&2)
 )
 lines=("${(@f)supabase_start}")
-public_key_line="${lines[-6]}"
+public_key_line="${lines[-5]}"
 
 # Split at colon
 parts=("${(@s/:/)public_key_line}")
