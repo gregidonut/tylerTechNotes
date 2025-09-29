@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import queryFn from "./queryFn";
 import styles from "./ticketList.module.css";
 import TicketArticle from "./ticketArticle/TicketArticle";
-import { type Ticket } from "@/pages/api/tickets/ticket";
+import { type Ticket } from "@/pages/api/getTickets/ticket";
 
 function TicketList(): React.JSX.Element {
     const { data, isLoading, isError, error } = useQuery<Ticket[]>({

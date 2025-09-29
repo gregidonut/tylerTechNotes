@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ticketArticle.module.css";
-import { type Ticket, TicketStatus } from "@/pages/api/tickets/ticket";
+import { type Ticket, TicketStatus } from "@/pages/api/getTickets/ticket";
 
 export default function TicketArticle({
     ticketData: t,
