@@ -10,6 +10,7 @@ export enum cmd {
   stop = "stop",
   status = "status",
   genTypes = "genTypes",
+  diff = "diff",
 }
 
 export default function (c: cmd) {
@@ -40,15 +41,17 @@ export default function (c: cmd) {
         opts,
       );
       break;
-    default:
+    case cmd.diff:
       supabase = spawn(
         "bunx",
-        ["supabase", c],
-
+        ["supabase", "db", "diff", "--local", "-f", "init"],
         opts,
       );
+      break;
+    default:
+      supabase = spawn("bunx", ["supabase", c], opts);
   }
-  supabase.on("exit", (code) => {
+  supabase.on("exit", function (code) {
     process.exit(code ?? 0);
   });
 }
