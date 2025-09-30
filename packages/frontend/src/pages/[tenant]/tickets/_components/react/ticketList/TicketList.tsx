@@ -16,6 +16,7 @@ function TicketList(): React.JSX.Element {
     const { userId, orgId } = useStore($authStore);
     const { data, isLoading, isError, error } = useQuery<Ticket[]>({
         queryKey: [
+            "get",
             "tickets",
             {
                 userId,
