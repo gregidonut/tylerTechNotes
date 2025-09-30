@@ -2,9 +2,21 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
+
+import InnerHeader from "../_components/innerHeader/InnerHeader.astro";
+import InnerMain from "../_components/innerMain/InnerMain.astro";
+
+import CreateTicket from "./_components/react/createTicket/CreateTicket.tsx";
 ---
 
 <Layout>
     <Header />
-    <Main><header><h2>create a ticket</h2></header></Main>
+    <Main>
+        <InnerHeader>
+            <h2>create a ticket</h2>
+        </InnerHeader>
+        <InnerMain>
+            <CreateTicket client:idle />
+        </InnerMain>
+    </Main>
 </Layout>
