@@ -1,4 +1,6 @@
+import { CreateTicketSchema } from "@/utils/models/formDataTypes/createTicket";
 import React from "react";
+import z from "zod";
 import { useAppForm } from "../hooks/form";
 import { useSaveTicketMutation } from "../hooks/useSaveTicketMutation";
 import { formOpts } from "./formOpts";
@@ -27,9 +29,12 @@ export default function FormSection(): React.JSX.Element {
                     validators={{
                         onChangeAsyncDebounceMs: 500,
                         onChangeAsync: function ({ value }) {
-                            return value.split(" ").length > 3
-                                ? undefined
-                                : "atleast three words";
+                            const { error } =
+                                CreateTicketSchema.shape.title.safeParse(value);
+                            if (!error) {
+                                return undefined;
+                            }
+                            return z.prettifyError(error);
                         },
                     }}
                     children={function (field) {

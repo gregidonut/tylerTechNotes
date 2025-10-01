@@ -1,4 +1,8 @@
-export interface CreateTicket {
-    title: string;
-    body: string | null;
-}
+import { z } from "zod";
+
+export const CreateTicketSchema = z.strictObject({
+    title: z.string().min(3),
+    body: z.union([z.string(), z.null()]).default(null),
+});
+
+export type CreateTicket = z.infer<typeof CreateTicketSchema>;

@@ -1,12 +1,23 @@
-import type { CreateTicket } from "@/utils/models/formDataTypes/createTicket";
+import { CreateTicketSchema } from "@/utils/models/formDataTypes/createTicket";
 import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async function (context) {
     const formData = await context.request.formData();
-    const ticket: CreateTicket = Object.fromEntries(
-        formData.entries(),
-    ) as unknown as CreateTicket;
+    const {
+        data: ticket,
+        success,
+        error: err,
+    } = CreateTicketSchema.safeParse(Object.fromEntries(formData.entries()));
+    if (!success) {
+        // none of the error formatting helpers from the docs work
+        // expect deprecation warning
+        const flattened = err.flatten();
+
+        return new Response(JSON.stringify({ message: flattened }), {
+            status: 400,
+        });
+    }
 
     const client = getSupabaseBrowserClient(context);
     const { data, error } = await client
