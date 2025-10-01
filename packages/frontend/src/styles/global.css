@@ -57,3 +57,18 @@
     }
 }
 
+@utility flex-col-center {
+    @apply flex w-full flex-col items-center justify-center;
+}
+
+@utility flex-col-between {
+    @apply flex w-full flex-col items-center justify-between;
+}
+
+@utility flex-row-center {
+    @apply flex w-full flex-row items-center justify-center;
+}
+
+@utility flex-row-between {
+    @apply flex w-full flex-row items-center justify-between;
+}

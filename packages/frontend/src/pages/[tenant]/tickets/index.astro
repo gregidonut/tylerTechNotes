@@ -3,9 +3,6 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
-import InnerHeader from "./_components/innerHeader/InnerHeader.astro";
-import InnerMain from "./_components/innerMain/InnerMain.astro";
-
 import TicketList from "./_components/react/ticketList/TicketList";
 
 import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
@@ -20,11 +17,11 @@ import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
 <Layout>
     <Header />
     <Main>
-        <InnerHeader>
-            <h2>tickets system</h2>
-        </InnerHeader>
-        <InnerMain>
+        <header class="w-full">
+            <h2 class="text-xl">tickets system</h2>
+        </header>
+        <main class="flex-row-center flex-1">
             <TicketList client:idle />
-        </InnerMain>
+        </main>
     </Main>
 </Layout>
