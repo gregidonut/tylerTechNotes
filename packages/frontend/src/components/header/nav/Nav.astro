@@ -4,8 +4,8 @@ import styles from "./nav.module.css";
 ---
 
 <SignedIn>
-    <nav class={styles.nav}>
-        <div class={styles.organizationSwitcherContainer}>
+    <nav class="flex min-h-10 w-full flex-row items-center justify-between">
+        <div class="min-h-5 py-0.5">
             <OrganizationSwitcher
                 afterSelectOrganizationUrl={"/tickets"}
                 afterSelectPersonalUrl={"/tickets"}
@@ -19,7 +19,7 @@ import styles from "./nav.module.css";
                 }}
             />
         </div>
-        <ul>
+        <ul class="flex flex-row items-center justify-center gap-1">
             <li>
                 <a href="/tickets">Tickets</a>
             </li>

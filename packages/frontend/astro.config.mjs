@@ -7,22 +7,30 @@ import { shadesOfPurple } from "@clerk/themes";
 
 import react from "@astrojs/react";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
-    site: import.meta.env.ASTRO_SITE,
-    integrations: [
-        compressor(),
-        clerk({
-            appearance: {
-                baseTheme: [shadesOfPurple],
-            },
-            signInForceRedirectUrl: "/tickets",
-        }),
-        react(),
-    ],
-    output: "server",
-    adapter: aws({
-        responseMode: "stream",
-    }),
-});
+  site: import.meta.env.ASTRO_SITE,
 
+  integrations: [
+      compressor(),
+      clerk({
+          appearance: {
+              baseTheme: [shadesOfPurple],
+          },
+          signInForceRedirectUrl: "/tickets",
+      }),
+      react(),
+  ],
+
+  output: "server",
+
+  adapter: aws({
+      responseMode: "stream",
+  }),
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});
