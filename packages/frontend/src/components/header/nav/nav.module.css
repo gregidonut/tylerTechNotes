@@ -1,8 +1,8 @@
 @reference "@/styles/global.css";
 
 .organizationSwitcher > button {
-    @apply bg-black/20;
+    @apply max-w-36 bg-black/20 sm:max-w-56 2xl:max-w-80;
 }
 .organizationSwitcher > button span {
-    @apply text-base;
+    @apply truncate text-base;
 }
