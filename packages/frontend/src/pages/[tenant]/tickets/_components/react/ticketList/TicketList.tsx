@@ -1,16 +1,15 @@
-import React from "react";
-import { useStore } from "@nanostores/react";
+import { type Ticket } from "@/pages/api/tickets/ticket";
 import { $authStore } from "@clerk/astro/client";
+import { useStore } from "@nanostores/react";
 import {
     QueryClient,
     QueryClientProvider,
     useQuery,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import React from "react";
 import queryFn from "./queryFn";
-import styles from "./ticketList.module.css";
 import TicketArticle from "./ticketArticle/TicketArticle";
-import { type Ticket } from "@/pages/api/tickets/ticket";
 
 function TicketList(): React.JSX.Element {
     const { userId, orgId } = useStore($authStore);
@@ -35,10 +34,13 @@ function TicketList(): React.JSX.Element {
         return <p>no todos yet..</p>;
     }
     return (
-        <ul className={styles.todoList}>
+        <ul className="flex-col-center gap-2.5">
             {data.map(function (t: Ticket) {
                 return (
-                    <li key={t.ticket_id}>
+                    <li
+                        key={t.ticket_id}
+                        className="w-full rounded-lg bg-drac-selection p-2.5"
+                    >
                         <TicketArticle ticketData={t} />
                     </li>
                 );
@@ -52,7 +54,10 @@ export default function PostListWrapper(): React.JSX.Element {
     return (
         <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
-            <section className={styles.section}>
+            <section
+                className="flex-col-start min-h-[30rem] rounded-lg border-4
+                    border-drac-selection p-2.5 sm:max-w-96"
+            >
                 <TicketList />
             </section>
         </QueryClientProvider>

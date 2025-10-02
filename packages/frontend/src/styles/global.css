@@ -3,6 +3,8 @@
 @plugin "tailwindcss-debug-screens";
 
 @theme {
+    --breakpoint-sm: 600px;
+
     --color-drac-background: #282a36;
     --color-drac-current-line: #6272a4;
     --color-drac-selection: #44475a;
@@ -65,10 +67,18 @@
     @apply flex w-full flex-col items-center justify-between;
 }
 
+@utility flex-col-start {
+    @apply flex w-full flex-col items-center justify-start;
+}
+
 @utility flex-row-center {
     @apply flex w-full flex-row items-center justify-center;
 }
 
 @utility flex-row-between {
     @apply flex w-full flex-row items-center justify-between;
+}
+
+@utility flex-row-start {
+    @apply flex w-full flex-row items-center justify-start;
 }
