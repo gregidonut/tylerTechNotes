@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/header/Header.astro";
+import Main from "@/components/main/Main.astro";
+
+const applicationPath = Astro.url.pathname;
+const os = Astro.locals.auth().orgSlug ?? "personal";
+const redirectPath = `/${os}${applicationPath}`;
+
+if (
+    applicationPath.startsWith("/tickets") &&
+    !applicationPath.startsWith(`/${os}/tickets`)
+) {
+    return Astro.redirect(redirectPath);
+}
+---
+
+<Layout>
+    <Header />
+    <Main>
+        <header class="w-full">
+            <h2 class="text-xl">
+                redirecting to <a href={redirectPath}>{redirectPath}</a>...
+            </h2>
+        </header>
+        <main class="flex-col-center flex-1">
+            <p>please wait...</p>
+        </main>
+    </Main>
+</Layout>

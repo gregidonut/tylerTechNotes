@@ -7,18 +7,8 @@ const preauth = defineMiddleware(async function (_, next) {
     return response;
 });
 
-const postauth = defineMiddleware(async function (context, next) {
+const postauth = defineMiddleware(async function (_, next) {
     const response = await next();
-    const applicationPath = context.url.pathname;
-    const os = context.locals.auth().orgSlug ?? "personal";
-
-    if (
-        applicationPath.startsWith("/tickets") &&
-        !applicationPath.startsWith(`/${os}/tickets`)
-    ) {
-        return context.redirect(`/${os}${applicationPath}`);
-    }
-
     return response;
 });
 
