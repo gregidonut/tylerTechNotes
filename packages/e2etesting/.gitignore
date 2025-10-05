@@ -1,1 +1,2 @@
 cypress.env.json
+*.queries.ts
