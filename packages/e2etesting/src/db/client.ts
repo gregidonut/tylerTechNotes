@@ -1,3 +1,4 @@
+import { PreparedQuery } from "@pgtyped/runtime";
 import { Client } from "pg";
 
 export default class DatabaseClient {
@@ -47,6 +48,20 @@ export default class DatabaseClient {
       await this.client.end();
       this.connected = false;
       console.log("Database disconnected");
+    }
+  }
+
+  public async executeQuery<TResult, TArgs>(
+    query: PreparedQuery<TResult, TArgs>,
+    args: any,
+  ): Promise<any> {
+    try {
+      await this.connect();
+      return await query.run(args, this.getClient());
+    } catch (e) {
+      throw e;
+    } finally {
+      await this.disconnect();
     }
   }
 }
