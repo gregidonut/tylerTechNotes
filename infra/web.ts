@@ -3,15 +3,15 @@ import {
   FE_ACM_CERT_ARN,
   clerkPublic,
   clerkSecret,
-  supabaseUrl,
   supabaseKey,
+  supabaseUrl,
 } from "./secrets";
 
 export const frontend = new sst.aws.Astro("Frontend", {
   path: "packages/frontend",
   link: [ASTRO_APP_DOMAIN, FE_ACM_CERT_ARN, supabaseKey, supabaseUrl],
   environment: {
-    SST_STAGE: $app.stage,
+    PUBLIC_APP_STAGE: $app.stage,
     ASTRO_SITE: ASTRO_APP_DOMAIN.value,
     PUBLIC_CLERK_PUBLISHABLE_KEY: clerkPublic.value,
     CLERK_SECRET_KEY: clerkSecret.value,

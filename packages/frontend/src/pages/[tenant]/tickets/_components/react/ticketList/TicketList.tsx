@@ -1,4 +1,5 @@
 import { type Ticket } from "@/pages/api/tickets/ticket";
+import { cy } from "@/utils/cy";
 import { $authStore } from "@clerk/astro/client";
 import { useStore } from "@nanostores/react";
 import {
@@ -55,6 +56,7 @@ export default function PostListWrapper(): React.JSX.Element {
         <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
             <section
+                {...cy("ticketList-section")}
                 className="flex-col-start min-h-[30rem] rounded-lg border-4
                     border-drac-selection p-2.5 sm:max-w-96"
             >

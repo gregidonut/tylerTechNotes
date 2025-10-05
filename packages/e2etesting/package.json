@@ -1,0 +1,17 @@
+{
+  "name": "@tyler-tech-notes/e2etesting",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "sst": "*"
+  },
+  "scripts": {
+    "shell": "sst shell tsx"
+  },
+  "devDependencies": {
+    "@clerk/testing": "^1.13.2",
+    "@types/node": "^22",
+    "cypress": "^15.3.0",
+    "tsx": "^4"
+  }
+}
