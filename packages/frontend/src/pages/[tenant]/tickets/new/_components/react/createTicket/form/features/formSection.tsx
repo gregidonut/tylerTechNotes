@@ -1,5 +1,6 @@
 import { CreateTicketSchema } from "@/utils/models/formDataTypes/createTicket";
 import React from "react";
+import { Form } from "react-aria-components";
 import z from "zod";
 import { useAppForm } from "../hooks/form";
 import { useSaveTicketMutation } from "../hooks/useSaveTicketMutation";
@@ -17,7 +18,7 @@ export default function FormSection(): React.JSX.Element {
     });
     return (
         <section>
-            <form
+            <Form
                 onSubmit={function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -38,17 +39,13 @@ export default function FormSection(): React.JSX.Element {
                         },
                     }}
                     children={function (field) {
-                        return (
-                            <div>
-                                <field.TextField />
-                            </div>
-                        );
+                        return <field.TextField />;
                     }}
                 />
                 <form.AppForm>
                     <form.SubscribeButton label="submit" />
                 </form.AppForm>
-            </form>
+            </Form>
         </section>
     );
 }

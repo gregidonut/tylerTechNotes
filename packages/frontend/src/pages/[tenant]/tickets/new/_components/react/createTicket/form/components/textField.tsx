@@ -1,4 +1,5 @@
 import { useStore } from "@tanstack/react-form";
+import { FieldError, Input, Label, TextField } from "react-aria-components";
 import { useFieldContext } from "../hooks/formContext.tsx";
 
 export default function TextFieldWrapper() {
@@ -9,24 +10,25 @@ export default function TextFieldWrapper() {
     });
 
     return (
-        <p>
-            <label htmlFor={field.name}>{field.name}</label>
-            <input
-                id={field.name}
-                name={field.name}
-                value={field.state.value}
-                type="text"
-                onChange={function (e) {
-                    field.handleChange(e.currentTarget.value);
-                }}
-            />
-            {errors.map(function (error: string) {
-                return (
-                    <em key={error} style={{ color: "red" }}>
-                        {error}
-                    </em>
-                );
-            })}
-        </p>
+        <TextField
+            value={field.state.value}
+            onChange={field.handleChange}
+            validationBehavior="aria"
+            isInvalid={errors.length > 0}
+        >
+            <Label>{field.name}</Label>
+            <Input />
+            {errors && errors.length > 0 && (
+                <FieldError>
+                    {errors.map(function (error: string) {
+                        return (
+                            <em key={error} className="text-drac-red">
+                                {error}
+                            </em>
+                        );
+                    })}
+                </FieldError>
+            )}
+        </TextField>
     );
 }
