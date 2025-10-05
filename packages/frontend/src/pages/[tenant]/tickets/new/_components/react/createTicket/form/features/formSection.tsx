@@ -17,13 +17,17 @@ export default function FormSection(): React.JSX.Element {
         },
     });
     return (
-        <section>
+        <section
+            className="flex-col-center min-h-[30rem] rounded-lg border-4
+                border-drac-selection p-5 sm:max-w-96"
+        >
             <Form
                 onSubmit={function (e) {
                     e.preventDefault();
                     e.stopPropagation();
                     form.handleSubmit();
                 }}
+                className="relative w-full"
             >
                 <form.AppField
                     name="title"
