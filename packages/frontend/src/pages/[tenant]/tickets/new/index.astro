@@ -13,7 +13,7 @@ import CreateTicket from "./_components/react/createTicket/CreateTicket.tsx";
             <h2 class="text-xl">create a ticket</h2>
         </header>
         <main class="flex-row-center flex-1">
-            <CreateTicket client:idle />
+            <CreateTicket client:only="react" />
         </main>
     </Main>
 </Layout>

@@ -1,5 +1,5 @@
 import { createFormHook } from "@tanstack/react-form";
-import { lazy } from "react";
+import React, { Suspense, lazy, type ComponentType } from "react";
 import { fieldContext, formContext } from "./formContext.tsx";
 
 const TextField = lazy(function () {
@@ -10,12 +10,24 @@ const SubscribeButton = lazy(function () {
     return import("../components/subscribeButton.tsx");
 });
 
+function withSuspense<P extends object>(
+    Component: ComponentType<P>,
+): ComponentType<P> {
+    return function (props: P): React.JSX.Element {
+        return (
+            <Suspense fallback={<p>Loading...</p>}>
+                <Component {...props} />
+            </Suspense>
+        );
+    };
+}
+
 export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     fieldComponents: {
-        TextField,
+        TextField: withSuspense(TextField),
     },
     formComponents: {
-        SubscribeButton,
+        SubscribeButton: withSuspense(SubscribeButton),
     },
     fieldContext,
     formContext,

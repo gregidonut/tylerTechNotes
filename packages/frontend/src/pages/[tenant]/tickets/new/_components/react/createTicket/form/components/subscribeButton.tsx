@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormContext } from "../hooks/formContext.tsx";
 
 export default function SubscribeButton({
@@ -6,14 +6,18 @@ export default function SubscribeButton({
 }: {
     label: string;
 }): React.JSX.Element {
+    const [mounted, setMounted] = useState(false);
     const form = useFormContext();
+    useEffect(function () {
+        setMounted(true);
+    }, []);
     return (
         <form.Subscribe
             selector={function (state) {
-                return state.isSubmitting;
+                return [state.isSubmitting, state.isValidating];
             }}
         >
-            {function (isSubmitting) {
+            {function ([isSubmitting, isValidating]) {
                 return (
                     <div
                         className="absolute bottom-[-6rem] flex w-full flex-row
@@ -27,7 +31,7 @@ export default function SubscribeButton({
                                 hover:border-b-[6px] hover:brightness-110
                                 active:translate-y-[2px] active:border-b-[2px]
                                 active:brightness-90"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || isValidating || !mounted}
                         >
                             {label}
                         </button>
