@@ -32,7 +32,7 @@ function TicketList(): React.JSX.Element {
         return <p>{error.message}</p>;
     }
     if (!data || data.length === 0) {
-        return <p>no todos yet..</p>;
+        return <p>no tickets yet..</p>;
     }
     return (
         <ul className="flex-col-center gap-2.5">
