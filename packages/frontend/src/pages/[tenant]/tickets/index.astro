@@ -4,14 +4,6 @@ import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
 import TicketList from "./_components/react/ticketList/TicketList";
-
-import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
-
-(async function () {
-    const supabase = getSupabaseBrowserClient(Astro);
-    const result = await supabase.storage.listBuckets();
-    console.log(result);
-})();
 ---
 
 <Layout>
