@@ -16,14 +16,14 @@ describe("tickets list page", () => {
     );
   });
 
-  it("tickets list", () => {
+  it("empty tickets page is a p", () => {
     cy.visit("/tickets");
-    cy.get("[data-cy='ticketList-section'] > p").contains("no todos yet..");
+    cy.get("[data-cy='ticketList-section'] > p").contains("no tickets yet..");
   });
-  it("create ticket", () => {
+  it("create ticket and org slug is retained through different pages", () => {
     cy.visit("/tickets/new");
     cy.location("pathname").then((path) => {
-      return cy.wrap(path.split("/")[1]).as("initialTenant");
+      return cy.wrap(path.split("/")[2]).as("initialTenant");
     });
     cy.get("[data-cy='formSection-section'] > form").as("form");
     cy.get("@form")
@@ -46,7 +46,7 @@ describe("tickets list page", () => {
 
     cy.get("[data-cy='ticketList-section'] > ul").should("have.length", 1);
     cy.location("pathname").then((path) => {
-      return cy.wrap(path.split("/")[1]).as("currentTenant");
+      return cy.wrap(path.split("/")[2]).as("currentTenant");
     });
     cy.get("@initialTenant").then((initialTenant) => {
       cy.get("@currentTenant").then((currentTenant) => {
