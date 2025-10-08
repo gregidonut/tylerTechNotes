@@ -25,6 +25,12 @@ export const onRequest = sequence(
                 return redirectToSignIn();
             }
         },
+        {
+            organizationSyncOptions: {
+                organizationPatterns: ["/org/:slug((?!personal)[^/]+)/:path*"],
+                personalAccountPatterns: ["/org/personal/:path*"],
+            },
+        },
     ),
     postauth,
 );

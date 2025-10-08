@@ -3,12 +3,10 @@ import { SignedIn, OrganizationSwitcher } from "@clerk/astro/components";
 import styles from "./nav.module.css";
 
 let applicationPath = Astro.url.pathname;
-const appPathFromIndexOne = "/" + applicationPath.split("/").slice(2).join("/");
+const appPathFromIndexOne = "/" + applicationPath.split("/").slice(3).join("/");
 
-if (
-    !applicationPath.startsWith("/tickets") &&
-    appPathFromIndexOne.startsWith("/tickets")
-) {
+// /org/<any>/tickets -> /tickets
+if (/^\/org\/[^/]+\/tickets/.test(applicationPath)) {
     applicationPath = appPathFromIndexOne;
 }
 ---

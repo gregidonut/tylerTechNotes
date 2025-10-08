@@ -5,11 +5,11 @@ import Main from "@/components/main/Main.astro";
 
 const applicationPath = Astro.url.pathname;
 const os = Astro.locals.auth().orgSlug ?? "personal";
-const redirectPath = `/${os}${applicationPath}`;
+const redirectPath = `/org/${os}${applicationPath}`;
 
 if (
     applicationPath.startsWith("/tickets") &&
-    !applicationPath.startsWith(`/${os}/tickets`)
+    !applicationPath.startsWith(`/org/${os}/tickets`)
 ) {
     return Astro.redirect(redirectPath);
 }
