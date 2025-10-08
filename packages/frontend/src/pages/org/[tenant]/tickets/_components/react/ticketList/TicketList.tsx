@@ -50,7 +50,7 @@ function TicketList(): React.JSX.Element {
     );
 }
 
-export default function PostListWrapper(): React.JSX.Element {
+export default function TicketListWrapper(): React.JSX.Element {
     const queryClient = new QueryClient();
     return (
         <QueryClientProvider client={queryClient}>
