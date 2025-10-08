@@ -40,19 +40,44 @@ import { addClerkCommands } from "@clerk/testing/cypress";
 addClerkCommands({ Cypress, cy });
 
 import { setupClerkTestingToken } from "@clerk/testing/cypress";
-Cypress.Commands.add("signInAsUser", function () {
+Cypress.Commands.add("signInAsUser", function (user: 0 | 1) {
   setupClerkTestingToken();
   cy.visit("/sign-in");
+
   cy.clerkSignIn({
     strategy: "password",
-    identifier: Cypress.env("test_user"),
-    password: Cypress.env("test_password"),
+    identifier: Cypress.env("test_users")[user].user_id,
+    password: Cypress.env("test_users")[user].password,
   });
   cy.window().then((window) => {
     window.Clerk.session.getToken().then((token) => {
       cy.wrap(token).as("clerkToken");
     });
   });
+});
+
+Cypress.Commands.add("createTicket", function (title: string) {
+  cy.visit("/tickets/new");
+  cy.get("[data-cy='formSection-section'] > form").as("form");
+  cy.get("@form")
+    .find("[data-cy='textTitleField-div'] input")
+    .as("ticketInput")
+    .should("be.focused")
+    .should("not.be.disabled")
+    .type(title);
+
+  cy.wait(600); // wait for async validation
+  cy.get("@form")
+    .find("button[type='submit']")
+    .should("not.be.disabled")
+    .as("btn");
+  cy.get("@btn").click();
+
+  cy.location("pathname").should("include", "/tickets/details");
+
+  cy.visit("/tickets");
+
+  cy.get("[data-cy='ticketList-section'] > ul").should("have.length", 1);
 });
 
 export {};
