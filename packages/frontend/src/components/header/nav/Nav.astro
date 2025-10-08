@@ -1,16 +1,26 @@
 ---
 import { SignedIn, OrganizationSwitcher } from "@clerk/astro/components";
 import styles from "./nav.module.css";
+
+let applicationPath = Astro.url.pathname;
+const appPathFromIndexOne = "/" + applicationPath.split("/").slice(2).join("/");
+
+if (
+    !applicationPath.startsWith("/tickets") &&
+    appPathFromIndexOne.startsWith("/tickets")
+) {
+    applicationPath = appPathFromIndexOne;
+}
 ---
 
 <SignedIn>
     <nav class="flex-row-between min-h-10">
         <div class="min-h-5 py-0.5">
             <OrganizationSwitcher
-                afterSelectOrganizationUrl={"/tickets"}
-                afterSelectPersonalUrl={"/tickets"}
-                afterCreateOrganizationUrl={"/tickets"}
-                afterLeaveOrganizationUrl={"/tickets"}
+                afterSelectOrganizationUrl={applicationPath}
+                afterSelectPersonalUrl={applicationPath}
+                afterCreateOrganizationUrl={applicationPath}
+                afterLeaveOrganizationUrl={applicationPath}
                 skipInvitationScreen={true}
                 appearance={{
                     elements: {
