@@ -8,9 +8,13 @@ import {
     useQuery,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import queryFn from "./queryFn";
 import TicketArticle from "./ticketArticle/TicketArticle";
+
+const CreateTicketDialog = lazy(function () {
+    return import("./createTicketDialog/CreateTicketDialog.tsx");
+});
 
 function TicketList(): React.JSX.Element {
     const { userId, orgId } = useStore($authStore);
@@ -57,9 +61,14 @@ export default function TicketListWrapper(): React.JSX.Element {
             <ReactQueryDevtools initialIsOpen={false} />
             <section
                 {...cy("ticketList-section")}
-                className="flex-col-start min-h-[30rem] rounded-lg border-4
-                    border-drac-selection p-2.5 sm:max-w-96"
+                className="flex-col-start min-h-[30rem] gap-4 rounded-lg
+                    border-4 border-drac-selection p-2.5 sm:max-w-96"
             >
+                <div className="flex w-full flex-row items-center justify-end">
+                    <Suspense fallback={<p>loading..</p>}>
+                        <CreateTicketDialog />
+                    </Suspense>
+                </div>
                 <TicketList />
             </section>
         </QueryClientProvider>
