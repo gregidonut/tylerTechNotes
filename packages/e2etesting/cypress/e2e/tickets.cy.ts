@@ -62,7 +62,6 @@ describe("tickets list page", () => {
     cy.get("[data-cy='ticketList-section'] > ul").should("have.length", 1);
   });
   it("users can't find each other's tickets personal", () => {
-    cy.visit("/org/personal/tickets/new");
     cy.createTicket("user 0's personal ticket");
 
     cy.clerkSignOut();

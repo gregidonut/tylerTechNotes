@@ -1,3 +1,4 @@
+import { cy } from "@/utils/cy";
 import React, { Suspense, lazy } from "react";
 
 import {
@@ -16,7 +17,10 @@ const FormSection = lazy(function () {
 export default function CreateTicketDialog(): React.JSX.Element {
     return (
         <DialogTrigger>
-            <div className="flex h-16 w-full flex-row items-center justify-end">
+            <div
+                {...cy("createTicket-btn-container")}
+                className="flex h-16 w-full flex-row items-center justify-end"
+            >
                 <Button
                     className="cursor-pointer rounded-lg border-b-[4px]
                         border-drac-comment bg-drac-comment px-6 py-2

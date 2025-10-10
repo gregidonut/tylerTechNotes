@@ -57,7 +57,8 @@ Cypress.Commands.add("signInAsUser", function (user: 0 | 1) {
 });
 
 Cypress.Commands.add("createTicket", function (title: string) {
-  cy.visit("/tickets/new");
+  cy.visit("/tickets");
+  cy.get("[data-cy='createTicket-btn-container'] > button").click();
   cy.get("[data-cy='formSection-section'] > form").as("form");
   cy.get("@form")
     .find("[data-cy='textTitleField-div'] input")
