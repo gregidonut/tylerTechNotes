@@ -3,6 +3,8 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
+import DetailsCard from "./_components/react/detailsCard/DetailsCard.tsx";
+
 const { id } = Astro.params;
 ---
 
@@ -15,6 +17,8 @@ const { id } = Astro.params;
             </h2>
         </header>
 
-        <main class="flex-row-center flex-1"></main>
+        <main class="flex-row-center flex-1">
+            <DetailsCard client:only="react" id={id} />
+        </main>
     </Main>
 </Layout>
