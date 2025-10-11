@@ -3,4 +3,4 @@ SELECT * FROM tickets;
 
 
 /* @name TruncateTickets */
-TRUNCATE tickets;
+TRUNCATE ticket_content, tickets, user_tenant CASCADE;
