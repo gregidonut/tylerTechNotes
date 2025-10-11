@@ -1,10 +1,10 @@
-import { type Ticket } from "@/pages/api/tickets/ticket";
+import { type Database } from "@/utils/models/supabase";
 import React from "react";
 
 export default function TicketArticle({
     ticketData: t,
 }: {
-    ticketData: Ticket;
+    ticketData: Database["public"]["Functions"]["get_tickets"]["Returns"][number];
 }): React.JSX.Element {
     return (
         <article>

@@ -1,5 +1,5 @@
-import { type Ticket } from "@/pages/api/tickets/ticket";
 import { cy } from "@/utils/cy";
+import { type Database } from "@/utils/models/supabase";
 import { $authStore } from "@clerk/astro/client";
 import { useStore } from "@nanostores/react";
 import {
@@ -18,7 +18,9 @@ const CreateTicketDialog = lazy(function () {
 
 function TicketList(): React.JSX.Element {
     const { userId, orgId } = useStore($authStore);
-    const { data, isLoading, isError, error } = useQuery<Ticket[]>({
+    const { data, isLoading, isError, error } = useQuery<
+        Database["public"]["Functions"]["get_tickets"]["Returns"]
+    >({
         queryKey: [
             "get",
             "tickets",
@@ -40,7 +42,8 @@ function TicketList(): React.JSX.Element {
     }
     return (
         <ul className="flex-col-center gap-2.5">
-            {data.map(function (t: Ticket) {
+            {data.map(function (t) {
+                console.log({ t });
                 return (
                     <li
                         key={t.ticket_id}

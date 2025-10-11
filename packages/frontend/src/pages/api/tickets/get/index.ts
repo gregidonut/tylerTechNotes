@@ -1,13 +1,10 @@
-import type { APIRoute } from "astro";
 import { getSupabaseBrowserClient } from "@/utils/supabase/browserClient";
+import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async function (context) {
     const client = getSupabaseBrowserClient(context);
 
-    const { data, error } = await client
-        .from("tickets")
-        .select()
-        .order("created_at", { ascending: false });
+    const { data, error } = await client.rpc("get_tickets");
 
     if (error) {
         return new Response(JSON.stringify({ message: error.message }), {
