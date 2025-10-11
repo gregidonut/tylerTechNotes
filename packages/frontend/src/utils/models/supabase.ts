@@ -109,6 +109,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_ticket: {
+        Args: {
+          p_body?: string
+          p_status?: Database["public"]["Enums"]["ticket_status"]
+          p_title: string
+        }
+        Returns: {
+          ticket_id: string
+        }[]
+      }
       get_tickets: {
         Args: Record<PropertyKey, never>
         Returns: {

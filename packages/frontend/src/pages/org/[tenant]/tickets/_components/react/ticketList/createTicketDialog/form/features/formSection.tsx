@@ -12,7 +12,8 @@ export default function FormSection(): React.JSX.Element {
     const form = useAppForm({
         ...formOpts,
         onSubmit: async function ({ formApi, value }) {
-            const { ticket_id } = await saveTicketMutation.mutateAsync(value);
+            const mutateRes = await saveTicketMutation.mutateAsync(value);
+            const { ticket_id } = mutateRes[0]!;
             formApi.reset();
             window.location.href = `/tickets/details/${ticket_id}`;
         },

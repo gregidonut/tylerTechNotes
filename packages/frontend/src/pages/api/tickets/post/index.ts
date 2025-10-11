@@ -20,11 +20,10 @@ export const POST: APIRoute = async function (context) {
     }
 
     const client = getSupabaseBrowserClient(context);
-    const { data, error } = await client
-        .from("tickets")
-        .insert(ticket)
-        .select("ticket_id")
-        .single();
+    const { data, error } = await client.rpc("create_ticket", {
+        p_title: ticket.title,
+        ...(ticket.body && { p_body: ticket.body }),
+    });
 
     if (error) {
         return new Response(JSON.stringify({ message: error.message }), {
