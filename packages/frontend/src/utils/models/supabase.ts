@@ -119,6 +119,22 @@ export type Database = {
           ticket_id: string
         }[]
       }
+      get_ticket: {
+        Args: { p_ticket_id: string }
+        Returns: {
+          body: string
+          created_at: string
+          created_by: string
+          deleted: boolean
+          status: Database["public"]["Enums"]["ticket_status"]
+          tenant_id: string
+          ticket_content_id: number
+          ticket_id: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }[]
+      }
       get_tickets: {
         Args: Record<PropertyKey, never>
         Returns: {

@@ -3,9 +3,12 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/header/Header.astro";
 import Main from "@/components/main/Main.astro";
 
-import DetailsCard from "./_components/react/detailsCard/DetailsCard.tsx";
+import VersionList from "./_components/react/versionList/VersionList.tsx";
 
 const { id } = Astro.params;
+if (!id) {
+    Astro.redirect("/tickets");
+}
 ---
 
 <Layout>
@@ -17,8 +20,8 @@ const { id } = Astro.params;
             </h2>
         </header>
 
-        <main class="flex-row-center flex-1">
-            <DetailsCard client:only="react" id={id} />
+        <main class="flex-col-center flex-1">
+            <VersionList client:idle id={id!} />
         </main>
     </Main>
 </Layout>
