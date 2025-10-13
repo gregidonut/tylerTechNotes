@@ -1,6 +1,5 @@
 import { cy } from "@/utils/cy";
 import React, { Suspense, lazy } from "react";
-
 import {
     Button,
     Dialog,
@@ -11,7 +10,9 @@ import {
 } from "react-aria-components";
 
 const FormSection = lazy(function () {
-    return import("./form/features/formSection");
+    return import(
+        "@/components/react/forms/ticket/features/create/FormSection"
+    );
 });
 
 export default function CreateTicketDialog(): React.JSX.Element {

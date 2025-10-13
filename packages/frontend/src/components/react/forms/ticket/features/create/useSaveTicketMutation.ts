@@ -1,7 +1,7 @@
+import { type CreateTicket } from "@/utils/models/formDataTypes/createTicket";
 import { type Database } from "@/utils/models/supabase";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { type CreateTicket } from "@/utils/models/formDataTypes/createTicket";
 
 export function useSaveTicketMutation() {
     return useMutation({
