@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "react-aria-components";
 import { useFormContext } from "../hooks/formContext.tsx";
+import BouncyButton from "@/components/react/forms/ticket/components/BouncyButton.tsx";
 
 export default function SubscribeButton({
     label,
@@ -20,18 +20,12 @@ export default function SubscribeButton({
                         className="flex min-h-16 w-full flex-row items-center
                             justify-end"
                     >
-                        <Button
+                        <BouncyButton
                             type={label}
-                            className="cursor-pointer rounded-lg border-b-[4px]
-                                border-drac-comment bg-drac-comment px-6 py-2
-                                transition-all hover:-translate-y-[1px]
-                                hover:border-b-[6px] hover:brightness-110
-                                active:translate-y-[2px] active:border-b-[2px]
-                                active:brightness-90"
                             isPending={isSubmitting ?? isValidating ?? false}
                         >
                             {label}
-                        </Button>
+                        </BouncyButton>
                     </div>
                 );
             }}
