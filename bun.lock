@@ -69,6 +69,7 @@
         "react-aria-components": "^1.13.0",
         "react-dom": "^19.1.1",
         "tailwindcss": "^4.1.14",
+        "tailwindcss-react-aria-components": "^2.0.1",
         "zod": "^4.1.11",
       },
       "devDependencies": {
@@ -2122,6 +2123,8 @@
     "tailwindcss": ["tailwindcss@4.1.14", "", {}, "sha512-b7pCxjGO98LnxVkKjaZSDeNuljC4ueKUddjENJOADtubtdo8llTaJy7HwBMeLNSSo2N5QIAgklslK1+Ir8r6CA=="],
 
     "tailwindcss-debug-screens": ["tailwindcss-debug-screens@3.0.1", "", { "peerDependencies": { "tailwindcss": "^4.0" } }, "sha512-ibUaLQGk4AvxnKzGyoLlj1kzBRADcQV65ELENcWxkXJArUCnitR/GZxxDPL9XnW96mzUEuhJqgFI7C43hKm6Vw=="],
+
+    "tailwindcss-react-aria-components": ["tailwindcss-react-aria-components@2.0.1", "", { "peerDependencies": { "tailwindcss": "^4.0.0" } }, "sha512-yTAfYv9BE/gKczS+b8UiFMqxnrEYKKNE6Y4vAWzGadkHGb4Yuawp0SHbZKkZJQgFvK0KjO3JpCq/0kzR5jJ9tw=="],
 
     "tapable": ["tapable@2.2.3", "", {}, "sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg=="],
 

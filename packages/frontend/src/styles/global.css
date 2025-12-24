@@ -2,6 +2,8 @@
 
 @plugin "@tailwindcss/forms";
 @plugin "tailwindcss-debug-screens";
+@plugin "tailwindcss-react-aria-components";
+
 
 @theme {
     --breakpoint-sm: 600px;
