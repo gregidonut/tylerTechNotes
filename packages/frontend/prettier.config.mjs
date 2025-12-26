@@ -7,6 +7,7 @@ export default {
         "prettier-plugin-merge",
     ],
     tailwindStylesheet: "./src/styles/global.css",
+    tailwindFunctions: ["tv"],
     overrides: [
         {
             files: "*.astro",

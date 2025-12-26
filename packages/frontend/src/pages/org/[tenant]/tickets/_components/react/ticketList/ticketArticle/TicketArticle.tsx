@@ -1,5 +1,7 @@
 import { type Database } from "@/utils/models/supabase";
 import React from "react";
+import { DisclosureHeader, DisclosurePanel } from "@/components/ui/Disclosure";
+import { Link } from "react-aria-components";
 
 export default function TicketArticle({
     ticketData: t,
@@ -8,15 +10,14 @@ export default function TicketArticle({
 }): React.JSX.Element {
     return (
         <article>
-            <header className="flex-row-between">
-                <h3 className="flex-row-start">
-                    <a
-                        href={`tickets/details/${t.ticket_id}`}
-                        className="line-clam-1 max-w-48 truncate"
-                    >
-                        {t.title}
-                    </a>
-                </h3>
+            <DisclosureHeader>
+                <span>#{t.zendesk_id}</span>
+                <Link
+                    href={`tickets/details/${t.ticket_id}`}
+                    className="line-clam-1 max-w-48 truncate"
+                >
+                    details
+                </Link>
                 <strong
                     className={(function () {
                         let cls =
@@ -38,7 +39,8 @@ export default function TicketArticle({
                 >
                     {t.status}
                 </strong>
-            </header>
+            </DisclosureHeader>
+            {t.body ? <DisclosurePanel>{t.body}</DisclosurePanel> : null}
         </article>
     );
 }

@@ -34,12 +34,14 @@ export default function FormSection(): React.JSX.Element {
                 className="flex-col-center gap-4"
             >
                 <form.AppField
-                    name="title"
+                    name="zendesk_id"
                     validators={{
                         onChangeAsyncDebounceMs: 500,
                         onChangeAsync: function ({ value }) {
                             const { error } =
-                                CreateTicketSchema.shape.title.safeParse(value);
+                                CreateTicketSchema.shape.zendesk_id.safeParse(
+                                    value,
+                                );
                             if (!error) {
                                 return undefined;
                             }

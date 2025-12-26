@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, { Suspense, lazy } from "react";
 import queryFn from "./queryFn";
 import TicketArticle from "./ticketArticle/TicketArticle";
+import { DisclosureGroup, Disclosure } from "@/components/ui/Disclosure";
 
 const CreateTicketDialog = lazy(function () {
     return import("./createTicketDialog/CreateTicketDialog.tsx");
@@ -41,19 +42,20 @@ function TicketList(): React.JSX.Element {
         return <p>no tickets yet..</p>;
     }
     return (
-        <ul className="flex-col-center gap-2.5">
+        <DisclosureGroup className="flex-col-center gap-2.5">
             {data.map(function (t) {
                 console.log({ t });
                 return (
-                    <li
+                    <Disclosure
                         key={t.ticket_id}
                         className="w-full rounded-lg bg-drac-selection p-2.5"
+                        isDisabled={!t.body}
                     >
                         <TicketArticle ticketData={t} />
-                    </li>
+                    </Disclosure>
                 );
             })}
-        </ul>
+        </DisclosureGroup>
     );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "../hooks/formContext.tsx";
-import BouncyButton from "@/components/react/forms/ticket/components/BouncyButton.tsx";
+import BouncyButton from "@/components/react/buttons/BouncyButton.tsx";
 
 export default function SubscribeButton({
     label,

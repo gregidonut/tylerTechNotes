@@ -21,7 +21,7 @@ export const POST: APIRoute = async function (context) {
 
     const client = getSupabaseBrowserClient(context);
     const { data, error } = await client.rpc("create_ticket", {
-        p_title: ticket.title,
+        p_zendesk_id: ticket.zendesk_id,
         ...(ticket.body && { p_body: ticket.body }),
     });
 

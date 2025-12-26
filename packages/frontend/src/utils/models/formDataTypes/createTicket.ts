@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CreateTicketSchema = z.strictObject({
-    title: z.string().min(3),
+    zendesk_id: z.string().min(3),
     body: z.union([z.string(), z.null()]).default(null),
 });
 

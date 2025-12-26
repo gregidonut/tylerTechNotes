@@ -7,7 +7,7 @@ import {
     Modal,
     ModalOverlay,
 } from "react-aria-components";
-import BouncyButton from "@/components/react/forms/ticket/components/BouncyButton.tsx";
+import BouncyButton from "@/components/react/buttons/BouncyButton.tsx";
 
 const FormSection = lazy(function () {
     return import(
