@@ -1,0 +1,21 @@
+CREATE POLICY "User can view their link_template histories"
+    ON "public"."link_template_content"
+    AS PERMISSIVE
+    FOR SELECT
+    TO authenticated
+    USING (
+    EXISTS (SELECT
+            FROM user_tenant ut
+            WHERE ut.user_tenant_id = link_template_content.user_tenant_id)
+    );
+
+CREATE POLICY "Enable insert for authenticated users only"
+    ON "public"."link_template_content"
+    AS PERMISSIVE
+    FOR INSERT
+    TO authenticated
+    WITH CHECK (
+    EXISTS (SELECT
+            FROM user_tenant ut
+            WHERE ut.user_tenant_id = link_template_content.user_tenant_id)
+    );

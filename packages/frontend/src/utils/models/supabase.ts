@@ -9,6 +9,77 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      link_template_content: {
+        Row: {
+          base_url: string
+          deleted: boolean
+          description: string
+          link_template_content_id: number
+          link_template_id: string
+          updated_at: string
+          user_tenant_id: number | null
+        }
+        Insert: {
+          base_url: string
+          deleted?: boolean
+          description: string
+          link_template_content_id?: never
+          link_template_id: string
+          updated_at?: string
+          user_tenant_id?: number | null
+        }
+        Update: {
+          base_url?: string
+          deleted?: boolean
+          description?: string
+          link_template_content_id?: never
+          link_template_id?: string
+          updated_at?: string
+          user_tenant_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "link_template_content_link_template_id_fkey"
+            columns: ["link_template_id"]
+            isOneToOne: false
+            referencedRelation: "link_templates"
+            referencedColumns: ["link_template_id"]
+          },
+          {
+            foreignKeyName: "link_template_content_user_tenant_id_fkey"
+            columns: ["user_tenant_id"]
+            isOneToOne: false
+            referencedRelation: "user_tenant"
+            referencedColumns: ["user_tenant_id"]
+          },
+        ]
+      }
+      link_templates: {
+        Row: {
+          created_at: string
+          link_template_id: string
+          user_tenant_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          link_template_id?: string
+          user_tenant_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          link_template_id?: string
+          user_tenant_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "link_templates_user_tenant_id_fkey"
+            columns: ["user_tenant_id"]
+            isOneToOne: false
+            referencedRelation: "user_tenant"
+            referencedColumns: ["user_tenant_id"]
+          },
+        ]
+      }
       ticket_content: {
         Row: {
           body: string | null
@@ -117,6 +188,18 @@ export type Database = {
         }
         Returns: {
           ticket_id: string
+        }[]
+      }
+      get_link: {
+        Args: { p_description: string }
+        Returns: {
+          base_url: string
+          created_at: string
+          created_by: string
+          description: string
+          link_template_id: string
+          updated_at: string
+          updated_by: string
         }[]
       }
       get_ticket: {
