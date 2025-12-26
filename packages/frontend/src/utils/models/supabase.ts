@@ -16,9 +16,9 @@ export type Database = {
           status: Database["public"]["Enums"]["ticket_status"]
           ticket_content_id: number
           ticket_id: string
-          title: string
           updated_at: string
           user_tenant_id: number | null
+          zendesk_id: string
         }
         Insert: {
           body?: string | null
@@ -26,9 +26,9 @@ export type Database = {
           status?: Database["public"]["Enums"]["ticket_status"]
           ticket_content_id?: never
           ticket_id: string
-          title: string
           updated_at?: string
           user_tenant_id?: number | null
+          zendesk_id: string
         }
         Update: {
           body?: string | null
@@ -36,9 +36,9 @@ export type Database = {
           status?: Database["public"]["Enums"]["ticket_status"]
           ticket_content_id?: never
           ticket_id?: string
-          title?: string
           updated_at?: string
           user_tenant_id?: number | null
+          zendesk_id?: string
         }
         Relationships: [
           {
@@ -113,7 +113,7 @@ export type Database = {
         Args: {
           p_body?: string
           p_status?: Database["public"]["Enums"]["ticket_status"]
-          p_title: string
+          p_zendesk_id: string
         }
         Returns: {
           ticket_id: string
@@ -130,13 +130,13 @@ export type Database = {
           tenant_id: string
           ticket_content_id: number
           ticket_id: string
-          title: string
           updated_at: string
           updated_by: string
+          zendesk_id: string
         }[]
       }
       get_tickets: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           body: string
           created_at: string
@@ -144,10 +144,10 @@ export type Database = {
           status: Database["public"]["Enums"]["ticket_status"]
           tenant_id: string
           ticket_id: string
-          title: string
           updated_at: string
           updated_by: string
           user_id: string
+          zendesk_id: string
         }[]
       }
     }
