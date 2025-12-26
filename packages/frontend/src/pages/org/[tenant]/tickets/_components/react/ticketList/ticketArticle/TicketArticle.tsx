@@ -5,13 +5,21 @@ import { Link } from "react-aria-components";
 
 export default function TicketArticle({
     ticketData: t,
+    linkTemplateBaseUrl,
 }: {
     ticketData: Database["public"]["Functions"]["get_tickets"]["Returns"][number];
+    linkTemplateBaseUrl: string | undefined;
 }): React.JSX.Element {
     return (
         <article>
             <DisclosureHeader>
-                <span>#{t.zendesk_id}</span>
+                {linkTemplateBaseUrl ? (
+                    <Link href={`${linkTemplateBaseUrl}${t.zendesk_id}`}>
+                        #{t.zendesk_id}
+                    </Link>
+                ) : (
+                    <span>#{t.zendesk_id}</span>
+                )}
                 <Link
                     href={`tickets/details/${t.ticket_id}`}
                     className="line-clam-1 max-w-48 truncate"

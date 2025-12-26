@@ -1,15 +1,14 @@
 import { cy } from "@/utils/cy";
-import { type Database } from "@/utils/models/supabase";
 import { $authStore } from "@clerk/astro/client";
 import { useStore } from "@nanostores/react";
 import {
     QueryClient,
     QueryClientProvider,
-    useQuery,
+    useQueries,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, { Suspense, lazy } from "react";
-import queryFn from "./queryFn";
+import { getLink, getTickets } from "./queryFns.ts";
 import TicketArticle from "./ticketArticle/TicketArticle";
 import { DisclosureGroup, Disclosure } from "@/components/ui/Disclosure";
 
@@ -19,39 +18,73 @@ const CreateTicketDialog = lazy(function () {
 
 function TicketList(): React.JSX.Element {
     const { userId, orgId } = useStore($authStore);
-    const { data, isLoading, isError, error } = useQuery<
-        Database["public"]["Functions"]["get_tickets"]["Returns"]
-    >({
-        queryKey: [
-            "get",
-            "tickets",
+    const [
+        {
+            data: tData,
+            isLoading: tIsLoading,
+            isError: tIsError,
+            error: tQueryError,
+        },
+        {
+            data: ltData,
+            isLoading: ltIsLoading,
+            isError: ltIsError,
+            error: ltQueryError,
+        },
+    ] = useQueries({
+        queries: [
             {
-                userId,
-                orgId,
+                queryKey: [
+                    "get",
+                    "tickets",
+                    {
+                        userId,
+                        orgId,
+                    },
+                ],
+                queryFn: getTickets,
+            },
+            {
+                queryKey: [
+                    "get",
+                    "linkTemplate",
+                    {
+                        userId,
+                        orgId,
+                    },
+                    "zendesk ticket template",
+                ],
+                queryFn: getLink,
             },
         ],
-        queryFn,
     });
-    if (isLoading) {
+    if (tIsLoading || ltIsLoading) {
         return <p>loading...</p>;
     }
-    if (isError) {
-        return <p>{error.message}</p>;
+    if (tIsError) {
+        return <p>{tQueryError.message}</p>;
     }
-    if (!data || data.length === 0) {
+    if (ltIsError) {
+        return <p>{ltQueryError.message}</p>;
+    }
+    if (!tData || tData.length === 0) {
         return <p>no tickets yet..</p>;
     }
     return (
         <DisclosureGroup className="flex-col-center gap-2.5">
-            {data.map(function (t) {
-                console.log({ t });
+            {tData.map(function (t) {
                 return (
                     <Disclosure
                         key={t.ticket_id}
                         className="w-full rounded-lg bg-drac-selection p-2.5"
                         isDisabled={!t.body}
                     >
-                        <TicketArticle ticketData={t} />
+                        <TicketArticle
+                            ticketData={t}
+                            linkTemplateBaseUrl={
+                                ltData ? ltData.base_url : undefined
+                            }
+                        />
                     </Disclosure>
                 );
             })}
