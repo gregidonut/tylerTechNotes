@@ -106,7 +106,12 @@ export default function TicketListWrapper(): React.JSX.Element {
                 <header
                     className="flex w-full flex-row items-center justify-end"
                 >
-                    <Heading level={3}>overview</Heading>
+                    <Heading
+                        level={3}
+                        className="pl-2 text-xl font-bold underline"
+                    >
+                        Overview
+                    </Heading>
                     <Suspense fallback={<p>loading..</p>}>
                         <CreateTicketDialog />
                     </Suspense>
