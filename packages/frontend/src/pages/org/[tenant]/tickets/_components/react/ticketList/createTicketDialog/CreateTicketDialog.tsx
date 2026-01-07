@@ -1,13 +1,9 @@
 import { cy } from "@/utils/cy";
 import React, { Suspense, lazy } from "react";
-import {
-    Dialog,
-    DialogTrigger,
-    Heading,
-    Modal,
-    ModalOverlay,
-} from "react-aria-components";
+import { DialogTrigger, Heading } from "react-aria-components";
 import BouncyButton from "@/components/react/buttons/BouncyButton.tsx";
+import { Modal } from "@/components/ui/Modal.tsx";
+import { Dialog } from "@/components/ui/Dialog.tsx";
 
 const FormSection = lazy(function () {
     return import(
@@ -22,68 +18,37 @@ export default function CreateTicketDialog(): React.JSX.Element {
                 {...cy("createTicket-btn-container")}
                 className="flex h-16 w-full flex-row items-center justify-end"
             >
-                <BouncyButton>create +</BouncyButton>
+                <BouncyButton variant="primary">create +</BouncyButton>
             </div>
-            <ModalOverlay
-                className={function ({ isEntering, isExiting }) {
-                    return `absolute top-0 left-0 isolate z-10 h-(--page-height)
-                    w-full bg-black/25 backdrop-blur ${
-                        isEntering
-                            ? "animate-in fade-in duration-300 ease-out"
-                            : ""
-                    } ${
-                        isExiting
-                            ? "animate-out fade-out duration-200 ease-in"
-                            : ""
-                    } `;
-                }}
-            >
-                <Modal
-                    className={function ({ isEntering, isExiting }) {
-                        return `sticky top-0 left-0 box-border flex
-                        h-(--visual-viewport-height) w-full items-center
-                        justify-center p-4 text-center ${
-                            isEntering
-                                ? "animate-in zoom-in-95 duration-300 ease-out"
-                                : ""
-                        } ${
-                            isExiting
-                                ? "animate-out zoom-out-95 duration-200 ease-in"
-                                : ""
-                        } `;
+            <Modal>
+                <Dialog>
+                    {function ({ close }) {
+                        return (
+                            <>
+                                <header className="flex-row-between pb-10">
+                                    <Heading
+                                        slot="title"
+                                        className="text-2xl leading-6
+                                            font-semibold"
+                                        level={3}
+                                    >
+                                        Create Ticket
+                                    </Heading>
+                                    <BouncyButton
+                                        variant="destructive"
+                                        onPress={close}
+                                    >
+                                        x
+                                    </BouncyButton>
+                                </header>
+                                <Suspense fallback={<p>loading...</p>}>
+                                    <FormSection />
+                                </Suspense>
+                            </>
+                        );
                     }}
-                >
-                    <Dialog
-                        className="relative box-border max-h-full w-full
-                            overflow-hidden rounded-2xl border-4
-                            border-drac-selection bg-drac-background p-6
-                            text-left align-middle shadow-xl outline-hidden
-                            sm:max-w-96"
-                    >
-                        {function ({ close }) {
-                            return (
-                                <>
-                                    <header className="flex-row-between py-2.5">
-                                        <Heading
-                                            slot="title"
-                                            className="text-2xl leading-6
-                                                font-semibold"
-                                        >
-                                            Create Ticket
-                                        </Heading>
-                                        <BouncyButton onPress={close}>
-                                            x
-                                        </BouncyButton>
-                                    </header>
-                                    <Suspense fallback={<p>loading...</p>}>
-                                        <FormSection />
-                                    </Suspense>
-                                </>
-                            );
-                        }}
-                    </Dialog>
-                </Modal>
-            </ModalOverlay>
+                </Dialog>
+            </Modal>
         </DialogTrigger>
     );
 }
