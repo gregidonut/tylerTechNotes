@@ -11,6 +11,7 @@ import React, { Suspense, lazy } from "react";
 import { getLink, getTickets } from "./queryFns.ts";
 import TicketArticle from "./ticketArticle/TicketArticle";
 import { DisclosureGroup, Disclosure } from "@/components/ui/Disclosure";
+import { Heading } from "react-aria-components";
 
 const CreateTicketDialog = lazy(function () {
     return import("./createTicketDialog/CreateTicketDialog.tsx");
@@ -76,7 +77,7 @@ function TicketList(): React.JSX.Element {
                 return (
                     <Disclosure
                         key={t.ticket_id}
-                        className="w-full rounded-lg bg-drac-selection p-2.5"
+                        className="w-full rounded-lg bg-drac-selection p-1.5"
                         isDisabled={!t.body}
                     >
                         <TicketArticle
@@ -102,11 +103,14 @@ export default function TicketListWrapper(): React.JSX.Element {
                 className="flex-col-start min-h-[30rem] gap-4 rounded-lg
                     border-4 border-drac-selection p-2.5 sm:max-w-96"
             >
-                <div className="flex w-full flex-row items-center justify-end">
+                <header
+                    className="flex w-full flex-row items-center justify-end"
+                >
+                    <Heading level={3}>overview</Heading>
                     <Suspense fallback={<p>loading..</p>}>
                         <CreateTicketDialog />
                     </Suspense>
-                </div>
+                </header>
                 <TicketList />
             </section>
         </QueryClientProvider>

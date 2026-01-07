@@ -7,7 +7,6 @@ import {
     DisclosurePanel as AriaDisclosurePanel,
     type DisclosurePanelProps as AriaDisclosurePanelProps,
     composeRenderProps,
-    Heading,
     DisclosureStateContext,
 } from "react-aria-components";
 import { Button } from "@/components/ui/Button";
@@ -57,23 +56,25 @@ export interface DisclosureHeaderProps {
 export function DisclosureHeader({ children }: DisclosureHeaderProps) {
     let { isExpanded } = useContext(DisclosureStateContext)!;
     return (
-        <Heading className="m-0 text-lg font-semibold">
+        <header>
             <Button
                 slot="trigger"
                 variant="quiet"
                 className="w-full justify-start font-medium"
             >
-                {({ isDisabled }) => (
-                    <>
-                        <ChevronRight
-                            aria-hidden
-                            className={chevron({ isExpanded, isDisabled })}
-                        />
-                        {children}
-                    </>
-                )}
+                {function ({ isDisabled }) {
+                    return (
+                        <>
+                            <ChevronRight
+                                aria-hidden
+                                className={chevron({ isExpanded, isDisabled })}
+                            />
+                            {children}
+                        </>
+                    );
+                }}
             </Button>
-        </Heading>
+        </header>
     );
 }
 

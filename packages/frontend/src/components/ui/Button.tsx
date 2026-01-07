@@ -14,7 +14,7 @@ export interface ButtonProps extends RACButtonProps {
 
 let button = tv({
     extend: focusRing,
-    base: "relative box-border inline-flex h-9 cursor-default items-center justify-center gap-2 rounded-lg border border-transparent px-3.5 py-0 text-center font-sans text-sm transition [-webkit-tap-highlight-color:transparent] dark:border-white/10 [&:has(>svg:only-child)]:h-8 [&:has(>svg:only-child)]:w-8 [&:has(>svg:only-child)]:px-0",
+    base: "relative box-border inline-flex h-9 cursor-default items-center justify-center gap-2 rounded-lg border border-transparent px-1.5 py-0 text-center font-sans text-sm transition [-webkit-tap-highlight-color:transparent] dark:border-white/10 [&:has(>svg:only-child)]:h-8 [&:has(>svg:only-child)]:w-8 [&:has(>svg:only-child)]:px-0",
     variants: {
         variant: {
             primary:

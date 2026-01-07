@@ -1,7 +1,7 @@
 import { type Database } from "@/utils/models/supabase";
 import React from "react";
 import { DisclosureHeader, DisclosurePanel } from "@/components/ui/Disclosure";
-import { Link } from "react-aria-components";
+import { Heading, Link } from "react-aria-components";
 
 export default function TicketArticle({
     ticketData: t,
@@ -13,13 +13,15 @@ export default function TicketArticle({
     return (
         <article>
             <DisclosureHeader>
-                {linkTemplateBaseUrl ? (
-                    <Link href={`${linkTemplateBaseUrl}${t.zendesk_id}`}>
-                        #{t.zendesk_id}
-                    </Link>
-                ) : (
-                    <span>#{t.zendesk_id}</span>
-                )}
+                <Heading level={4}>
+                    {linkTemplateBaseUrl ? (
+                        <Link href={`${linkTemplateBaseUrl}${t.zendesk_id}`}>
+                            #{t.zendesk_id}
+                        </Link>
+                    ) : (
+                        <span>#{t.zendesk_id}</span>
+                    )}
+                </Heading>
                 <Link
                     href={`tickets/details/${t.ticket_id}`}
                     className="line-clam-1 max-w-48 truncate"
