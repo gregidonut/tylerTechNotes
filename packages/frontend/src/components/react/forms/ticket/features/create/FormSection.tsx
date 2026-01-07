@@ -22,7 +22,7 @@ export default function FormSection(): React.JSX.Element {
     return (
         <section
             {...cy("formSection-section")}
-            className="flex-col-center min-h-[15rem] rounded-lg border-4
+            className="flex-col-center min-h-[15rem] border-t-4
                 border-drac-selection p-5 sm:max-w-96"
         >
             <Form
