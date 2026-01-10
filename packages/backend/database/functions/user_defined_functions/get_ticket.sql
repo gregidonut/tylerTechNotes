@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION get_ticket(p_ticket_id UUID)
                 CREATED_AT        TIMESTAMPTZ,
                 CREATED_BY        TEXT,
                 TENANT_ID         TEXT,
-                TICKET_CONTENT_ID BIGINT,
+                TICKET_CONTENT_ID UUID,
                 UPDATED_AT        TIMESTAMPTZ,
                 UPDATED_BY        TEXT,
                 ZENDESK_ID        TEXT,

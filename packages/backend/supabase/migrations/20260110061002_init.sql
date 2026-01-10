@@ -1,8 +1,32 @@
 create type "public"."ticket_status" as enum ('open', 'in_progress', 'closed');
 
 
+  create table "public"."link_template_content" (
+    "link_template_content_id" uuid not null default extensions.uuid_generate_v4(),
+    "updated_at" timestamp with time zone not null default now(),
+    "base_url" text not null,
+    "description" text not null,
+    "deleted" boolean not null default false,
+    "link_template_id" uuid not null,
+    "user_tenant_id" bigint
+      );
+
+
+alter table "public"."link_template_content" enable row level security;
+
+
+  create table "public"."link_templates" (
+    "link_template_id" uuid not null default extensions.uuid_generate_v4(),
+    "created_at" timestamp with time zone not null default now(),
+    "user_tenant_id" bigint
+      );
+
+
+alter table "public"."link_templates" enable row level security;
+
+
   create table "public"."ticket_content" (
-    "ticket_content_id" bigint generated always as identity not null,
+    "ticket_content_id" uuid not null default extensions.uuid_generate_v4(),
     "updated_at" timestamp with time zone not null default now(),
     "zendesk_id" text not null,
     "body" text,
@@ -36,17 +60,37 @@ alter table "public"."tickets" enable row level security;
 
 alter table "public"."user_tenant" enable row level security;
 
+CREATE UNIQUE INDEX link_template_content_pkey ON public.link_template_content USING btree (link_template_content_id);
+
+CREATE UNIQUE INDEX link_templates_pkey ON public.link_templates USING btree (link_template_id);
+
 CREATE UNIQUE INDEX ticket_content_pkey ON public.ticket_content USING btree (ticket_content_id);
 
 CREATE UNIQUE INDEX tickets_pkey ON public.tickets USING btree (ticket_id);
 
 CREATE UNIQUE INDEX user_tenant_pkey ON public.user_tenant USING btree (user_tenant_id);
 
+alter table "public"."link_template_content" add constraint "link_template_content_pkey" PRIMARY KEY using index "link_template_content_pkey";
+
+alter table "public"."link_templates" add constraint "link_templates_pkey" PRIMARY KEY using index "link_templates_pkey";
+
 alter table "public"."ticket_content" add constraint "ticket_content_pkey" PRIMARY KEY using index "ticket_content_pkey";
 
 alter table "public"."tickets" add constraint "tickets_pkey" PRIMARY KEY using index "tickets_pkey";
 
 alter table "public"."user_tenant" add constraint "user_tenant_pkey" PRIMARY KEY using index "user_tenant_pkey";
+
+alter table "public"."link_template_content" add constraint "link_template_content_link_template_id_fkey" FOREIGN KEY (link_template_id) REFERENCES public.link_templates(link_template_id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+
+alter table "public"."link_template_content" validate constraint "link_template_content_link_template_id_fkey";
+
+alter table "public"."link_template_content" add constraint "link_template_content_user_tenant_id_fkey" FOREIGN KEY (user_tenant_id) REFERENCES public.user_tenant(user_tenant_id) ON UPDATE CASCADE ON DELETE SET NULL not valid;
+
+alter table "public"."link_template_content" validate constraint "link_template_content_user_tenant_id_fkey";
+
+alter table "public"."link_templates" add constraint "link_templates_user_tenant_id_fkey" FOREIGN KEY (user_tenant_id) REFERENCES public.user_tenant(user_tenant_id) ON UPDATE CASCADE ON DELETE SET NULL not valid;
+
+alter table "public"."link_templates" validate constraint "link_templates_user_tenant_id_fkey";
 
 alter table "public"."ticket_content" add constraint "ticket_content_ticket_id_fkey" FOREIGN KEY (ticket_id) REFERENCES public.tickets(ticket_id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
 
@@ -100,8 +144,44 @@ END;
 $function$
 ;
 
+CREATE OR REPLACE FUNCTION public.get_link(p_description text)
+ RETURNS TABLE(link_template_id uuid, created_at timestamp with time zone, created_by text, updated_at timestamp with time zone, updated_by text, base_url text, description text)
+ LANGUAGE plpgsql
+ SET search_path TO ''
+AS $function$
+BEGIN
+    RETURN QUERY
+        SELECT lt.link_template_id
+             , lt.created_at
+             , ut.user_id AS created_by
+             , ltcut.updated_at
+             , ltcut.updated_by
+             , ltcut.base_url
+             , ltcut.description
+        FROM public.user_tenant AS ut
+                 INNER JOIN public.link_templates AS lt ON ut.user_tenant_id = lt.user_tenant_id
+                 INNER JOIN LATERAL (SELECT ut.user_id AS updated_by
+                                          , ut.tenant_id
+                                          , c.link_template_id
+                                          , c.link_template_content_id
+                                          , c.base_url
+                                          , c.description
+                                          , c.updated_at
+                                          , c.deleted
+                                     FROM public.link_template_content AS c
+                                              INNER JOIN public.user_tenant AS ut ON c.user_tenant_id = ut.user_tenant_id
+            ) AS ltcut
+                            ON ltcut.link_template_id = lt.link_template_id
+        WHERE ltcut.description = p_description
+          AND NOT ltcut.deleted
+        ORDER BY ltcut.link_template_content_id DESC
+        LIMIT 1;
+END;
+$function$
+;
+
 CREATE OR REPLACE FUNCTION public.get_ticket(p_ticket_id uuid)
- RETURNS TABLE(ticket_id uuid, created_at timestamp with time zone, created_by text, tenant_id text, ticket_content_id bigint, updated_at timestamp with time zone, updated_by text, zendesk_id text, body text, status public.ticket_status, deleted boolean)
+ RETURNS TABLE(ticket_id uuid, created_at timestamp with time zone, created_by text, tenant_id text, ticket_content_id uuid, updated_at timestamp with time zone, updated_by text, zendesk_id text, body text, status public.ticket_status, deleted boolean)
  LANGUAGE plpgsql
  SET search_path TO ''
 AS $function$
@@ -180,6 +260,90 @@ BEGIN
 END;
 $function$
 ;
+
+grant delete on table "public"."link_template_content" to "anon";
+
+grant insert on table "public"."link_template_content" to "anon";
+
+grant references on table "public"."link_template_content" to "anon";
+
+grant select on table "public"."link_template_content" to "anon";
+
+grant trigger on table "public"."link_template_content" to "anon";
+
+grant truncate on table "public"."link_template_content" to "anon";
+
+grant update on table "public"."link_template_content" to "anon";
+
+grant delete on table "public"."link_template_content" to "authenticated";
+
+grant insert on table "public"."link_template_content" to "authenticated";
+
+grant references on table "public"."link_template_content" to "authenticated";
+
+grant select on table "public"."link_template_content" to "authenticated";
+
+grant trigger on table "public"."link_template_content" to "authenticated";
+
+grant truncate on table "public"."link_template_content" to "authenticated";
+
+grant update on table "public"."link_template_content" to "authenticated";
+
+grant delete on table "public"."link_template_content" to "service_role";
+
+grant insert on table "public"."link_template_content" to "service_role";
+
+grant references on table "public"."link_template_content" to "service_role";
+
+grant select on table "public"."link_template_content" to "service_role";
+
+grant trigger on table "public"."link_template_content" to "service_role";
+
+grant truncate on table "public"."link_template_content" to "service_role";
+
+grant update on table "public"."link_template_content" to "service_role";
+
+grant delete on table "public"."link_templates" to "anon";
+
+grant insert on table "public"."link_templates" to "anon";
+
+grant references on table "public"."link_templates" to "anon";
+
+grant select on table "public"."link_templates" to "anon";
+
+grant trigger on table "public"."link_templates" to "anon";
+
+grant truncate on table "public"."link_templates" to "anon";
+
+grant update on table "public"."link_templates" to "anon";
+
+grant delete on table "public"."link_templates" to "authenticated";
+
+grant insert on table "public"."link_templates" to "authenticated";
+
+grant references on table "public"."link_templates" to "authenticated";
+
+grant select on table "public"."link_templates" to "authenticated";
+
+grant trigger on table "public"."link_templates" to "authenticated";
+
+grant truncate on table "public"."link_templates" to "authenticated";
+
+grant update on table "public"."link_templates" to "authenticated";
+
+grant delete on table "public"."link_templates" to "service_role";
+
+grant insert on table "public"."link_templates" to "service_role";
+
+grant references on table "public"."link_templates" to "service_role";
+
+grant select on table "public"."link_templates" to "service_role";
+
+grant trigger on table "public"."link_templates" to "service_role";
+
+grant truncate on table "public"."link_templates" to "service_role";
+
+grant update on table "public"."link_templates" to "service_role";
 
 grant delete on table "public"."ticket_content" to "anon";
 
@@ -306,6 +470,50 @@ grant trigger on table "public"."user_tenant" to "service_role";
 grant truncate on table "public"."user_tenant" to "service_role";
 
 grant update on table "public"."user_tenant" to "service_role";
+
+
+  create policy "Enable insert for authenticated users only"
+  on "public"."link_template_content"
+  as permissive
+  for insert
+  to authenticated
+with check ((EXISTS ( SELECT
+   FROM public.user_tenant ut
+  WHERE (ut.user_tenant_id = link_template_content.user_tenant_id))));
+
+
+
+  create policy "User can view their link_template histories"
+  on "public"."link_template_content"
+  as permissive
+  for select
+  to authenticated
+using ((EXISTS ( SELECT
+   FROM public.user_tenant ut
+  WHERE (ut.user_tenant_id = link_template_content.user_tenant_id))));
+
+
+
+  create policy "Enable insert for authenticated users only"
+  on "public"."link_templates"
+  as permissive
+  for insert
+  to authenticated
+with check ((EXISTS ( SELECT
+   FROM public.user_tenant ut
+  WHERE (ut.user_tenant_id = link_templates.user_tenant_id))));
+
+
+
+  create policy "User can view their own link_templates"
+  on "public"."link_templates"
+  as permissive
+  for select
+  to authenticated
+using ((EXISTS ( SELECT
+   FROM public.user_tenant ut
+  WHERE (ut.user_tenant_id = link_templates.user_tenant_id))));
+
 
 
   create policy "Enable insert for authenticated users only"

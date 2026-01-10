@@ -14,7 +14,7 @@ export type Database = {
           base_url: string
           deleted: boolean
           description: string
-          link_template_content_id: number
+          link_template_content_id: string
           link_template_id: string
           updated_at: string
           user_tenant_id: number | null
@@ -23,7 +23,7 @@ export type Database = {
           base_url: string
           deleted?: boolean
           description: string
-          link_template_content_id?: never
+          link_template_content_id?: string
           link_template_id: string
           updated_at?: string
           user_tenant_id?: number | null
@@ -32,7 +32,7 @@ export type Database = {
           base_url?: string
           deleted?: boolean
           description?: string
-          link_template_content_id?: never
+          link_template_content_id?: string
           link_template_id?: string
           updated_at?: string
           user_tenant_id?: number | null
@@ -85,7 +85,7 @@ export type Database = {
           body: string | null
           deleted: boolean
           status: Database["public"]["Enums"]["ticket_status"]
-          ticket_content_id: number
+          ticket_content_id: string
           ticket_id: string
           updated_at: string
           user_tenant_id: number | null
@@ -95,7 +95,7 @@ export type Database = {
           body?: string | null
           deleted?: boolean
           status?: Database["public"]["Enums"]["ticket_status"]
-          ticket_content_id?: never
+          ticket_content_id?: string
           ticket_id: string
           updated_at?: string
           user_tenant_id?: number | null
@@ -105,7 +105,7 @@ export type Database = {
           body?: string | null
           deleted?: boolean
           status?: Database["public"]["Enums"]["ticket_status"]
-          ticket_content_id?: never
+          ticket_content_id?: string
           ticket_id?: string
           updated_at?: string
           user_tenant_id?: number | null
@@ -211,7 +211,7 @@ export type Database = {
           deleted: boolean
           status: Database["public"]["Enums"]["ticket_status"]
           tenant_id: string
-          ticket_content_id: number
+          ticket_content_id: string
           ticket_id: string
           updated_at: string
           updated_by: string
