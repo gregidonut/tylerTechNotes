@@ -81,4 +81,21 @@ Cypress.Commands.add("createTicket", function (title: string) {
   cy.get("[data-cy='ticketList-section'] > ul").should("have.length", 1);
 });
 
+Cypress.Commands.add("assertOrgSwitcherButtonMatchOrgInPath", function () {
+  cy.location("pathname").then((pathname) => {
+    const applicationPath = pathname;
+    expect(applicationPath.startsWith("/org")).to.be.true;
+    const orgFromPath = applicationPath.split("/")[2];
+    if (orgFromPath === "personal") {
+      const org = orgFromPath[0].toUpperCase() + orgFromPath.slice(1);
+      cy.get(".cl-userPreviewMainIdentifierText").contains(org, {
+        timeout: 9000,
+      });
+      return;
+    }
+    cy.get(".cl-organizationPreviewMainIdentifier").contains(orgFromPath, {
+      timeout: 9000,
+    });
+  });
+});
 export {};
