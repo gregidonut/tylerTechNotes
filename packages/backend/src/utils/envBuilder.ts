@@ -10,8 +10,9 @@ export enum cmd {
   stop = "stop",
   status = "status",
   genTypes = "genTypes",
-  diff = "diff",
   reset = "reset",
+  diff = "diff",
+  dump = "dump",
 }
 
 export default function (c: cmd) {
@@ -46,6 +47,20 @@ export default function (c: cmd) {
       supabase = spawn(
         "bunx",
         ["supabase", "db", "diff", "--local", "-f", "init"],
+        opts,
+      );
+      break;
+    case cmd.dump:
+      supabase = spawn(
+        "bunx",
+        [
+          "supabase",
+          "db",
+          "dump",
+          "--local",
+          "--data-only",
+          "--file=supabase/seed.sql",
+        ],
         opts,
       );
       break;
