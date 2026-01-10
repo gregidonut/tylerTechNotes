@@ -154,6 +154,77 @@ export type Database = {
           },
         ]
       }
+      todo_content: {
+        Row: {
+          deleted: boolean
+          description: string
+          todo_content_id: string
+          todo_id: string
+          todo_type: Database["public"]["Enums"]["todo_type"]
+          updated_at: string
+          user_tenant_id: number | null
+        }
+        Insert: {
+          deleted?: boolean
+          description: string
+          todo_content_id?: string
+          todo_id: string
+          todo_type: Database["public"]["Enums"]["todo_type"]
+          updated_at?: string
+          user_tenant_id?: number | null
+        }
+        Update: {
+          deleted?: boolean
+          description?: string
+          todo_content_id?: string
+          todo_id?: string
+          todo_type?: Database["public"]["Enums"]["todo_type"]
+          updated_at?: string
+          user_tenant_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "todo_content_todo_id_fkey"
+            columns: ["todo_id"]
+            isOneToOne: false
+            referencedRelation: "todos"
+            referencedColumns: ["todo_id"]
+          },
+          {
+            foreignKeyName: "todo_content_user_tenant_id_fkey"
+            columns: ["user_tenant_id"]
+            isOneToOne: false
+            referencedRelation: "user_tenant"
+            referencedColumns: ["user_tenant_id"]
+          },
+        ]
+      }
+      todos: {
+        Row: {
+          created_at: string
+          todo_id: string
+          user_tenant_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          todo_id?: string
+          user_tenant_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          todo_id?: string
+          user_tenant_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "todos_user_tenant_id_fkey"
+            columns: ["user_tenant_id"]
+            isOneToOne: false
+            referencedRelation: "user_tenant"
+            referencedColumns: ["user_tenant_id"]
+          },
+        ]
+      }
       user_tenant: {
         Row: {
           created_at: string
@@ -236,6 +307,7 @@ export type Database = {
     }
     Enums: {
       ticket_status: "open" | "in_progress" | "closed"
+      todo_type: "ticket"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -364,6 +436,7 @@ export const Constants = {
   public: {
     Enums: {
       ticket_status: ["open", "in_progress", "closed"],
+      todo_type: ["ticket"],
     },
   },
 } as const
