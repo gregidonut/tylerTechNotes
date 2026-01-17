@@ -25,3 +25,10 @@ export const frontend = new sst.aws.Astro("Frontend", {
     cert: FE_ACM_CERT_ARN.value,
   },
 });
+
+new awsnative.lambda.Permission("InvokePermission", {
+  action: "lambda:InvokeFunction",
+  functionName: frontend.nodes.server!.name,
+  principal: "*",
+  invokedViaFunctionUrl: true,
+});
