@@ -37,6 +37,13 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "SupabaseVPC": {
+      "type": "sst.aws.Vpc"
+    }
+    "ttn-canarySupabaseVPC": {
+      "bastion": string
+      "type": "sst.aws.Vpc"
+    }
   }
 }
 /// <reference path="sst-env.d.ts" />

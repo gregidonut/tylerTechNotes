@@ -6,6 +6,7 @@ import {
   supabaseKey,
   supabaseUrl,
 } from "./secrets";
+import { Vpc as SupabaseVPC } from "./vpc";
 
 export const frontend = new sst.aws.Astro("Frontend", {
   path: "packages/frontend",
@@ -24,6 +25,7 @@ export const frontend = new sst.aws.Astro("Frontend", {
     dns: false,
     cert: FE_ACM_CERT_ARN.value,
   },
+  vpc: SupabaseVPC,
 });
 
 new awsnative.lambda.Permission("InvokePermission", {
