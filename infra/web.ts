@@ -25,12 +25,5 @@ export const frontend = new sst.aws.Astro("Frontend", {
     dns: false,
     cert: FE_ACM_CERT_ARN.value,
   },
-  vpc: SupabaseVPC,
-});
-
-new awsnative.lambda.Permission("InvokePermission", {
-  action: "lambda:InvokeFunction",
-  functionName: frontend.nodes.server!.name,
-  principal: "*",
-  invokedViaFunctionUrl: true,
+  vpc: ["dev", "staging"].includes($app.stage) ? undefined : SupabaseVPC,
 });

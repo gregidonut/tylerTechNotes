@@ -10,6 +10,18 @@ export default $config({
     };
   },
   async run() {
-    await import("./infra/web");
+    const { frontend } = await import("./infra/web");
+
+    if (["dev"].includes($app.stage)) {
+      return;
+    }
+
+    // https://github.com/anomalyco/sst/issues/6198#issuecomment-3637447058
+    new awsnative.lambda.Permission("InvokePermission", {
+      action: "lambda:InvokeFunction",
+      functionName: frontend.nodes.server!.name,
+      principal: "*",
+      invokedViaFunctionUrl: true,
+    });
   },
 });
