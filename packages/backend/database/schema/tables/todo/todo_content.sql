@@ -11,6 +11,11 @@ CREATE TABLE todo_content
     todo_id         UUID             NOT NULL REFERENCES todos (todo_id) ON UPDATE CASCADE ON DELETE CASCADE,
     todo_parent_id  UUID             REFERENCES todo_parents (todo_parent_id) ON UPDATE CASCADE ON DELETE SET NULL,
     user_tenant_id  BIGINT           REFERENCES user_tenant (user_tenant_id) ON UPDATE CASCADE ON DELETE SET NULL
+        CHECK (
+            CASE
+                WHEN todo_type = 'ticket' THEN todo_parent_id IS NOT NULL
+                END
+            )
 );
 
 ALTER TABLE "todo_content"
