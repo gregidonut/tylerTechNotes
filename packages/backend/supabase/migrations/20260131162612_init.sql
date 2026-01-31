@@ -1,6 +1,6 @@
 create type "public"."ticket_status" as enum ('open', 'in_progress', 'closed');
 
-create type "public"."todo_type" as enum ('ticket');
+create type "public"."todo_type" as enum ('default', 'ticket');
 
 
   create table "public"."link_template_content" (
@@ -56,7 +56,6 @@ alter table "public"."tickets" enable row level security;
     "todo_content_id" uuid not null default extensions.uuid_generate_v4(),
     "updated_at" timestamp with time zone not null default now(),
     "description" text not null,
-    "todo_type" public.todo_type not null,
     "deleted" boolean not null default false,
     "todo_id" uuid not null,
     "user_tenant_id" bigint
@@ -64,6 +63,17 @@ alter table "public"."tickets" enable row level security;
 
 
 alter table "public"."todo_content" enable row level security;
+
+
+  create table "public"."todo_parents" (
+    "todo_parent_id" uuid not null default extensions.uuid_generate_v4(),
+    "created_at" timestamp with time zone not null default now(),
+    "todo_id" uuid,
+    "ticket_id" uuid
+      );
+
+
+alter table "public"."todo_parents" enable row level security;
 
 
   create table "public"."todos" (
@@ -96,6 +106,8 @@ CREATE UNIQUE INDEX tickets_pkey ON public.tickets USING btree (ticket_id);
 
 CREATE UNIQUE INDEX todo_content_pkey ON public.todo_content USING btree (todo_content_id);
 
+CREATE UNIQUE INDEX todo_parents_pkey ON public.todo_parents USING btree (todo_parent_id);
+
 CREATE UNIQUE INDEX todos_pkey ON public.todos USING btree (todo_id);
 
 CREATE UNIQUE INDEX user_tenant_pkey ON public.user_tenant USING btree (user_tenant_id);
@@ -109,6 +121,8 @@ alter table "public"."ticket_content" add constraint "ticket_content_pkey" PRIMA
 alter table "public"."tickets" add constraint "tickets_pkey" PRIMARY KEY using index "tickets_pkey";
 
 alter table "public"."todo_content" add constraint "todo_content_pkey" PRIMARY KEY using index "todo_content_pkey";
+
+alter table "public"."todo_parents" add constraint "todo_parents_pkey" PRIMARY KEY using index "todo_parents_pkey";
 
 alter table "public"."todos" add constraint "todos_pkey" PRIMARY KEY using index "todos_pkey";
 
@@ -145,6 +159,18 @@ alter table "public"."todo_content" validate constraint "todo_content_todo_id_fk
 alter table "public"."todo_content" add constraint "todo_content_user_tenant_id_fkey" FOREIGN KEY (user_tenant_id) REFERENCES public.user_tenant(user_tenant_id) ON UPDATE CASCADE ON DELETE SET NULL not valid;
 
 alter table "public"."todo_content" validate constraint "todo_content_user_tenant_id_fkey";
+
+alter table "public"."todo_parents" add constraint "todo_parents_check" CHECK ((((todo_id IS NOT NULL) AND (ticket_id IS NULL)) OR ((todo_id IS NULL) AND (ticket_id IS NOT NULL)))) not valid;
+
+alter table "public"."todo_parents" validate constraint "todo_parents_check";
+
+alter table "public"."todo_parents" add constraint "todo_parents_ticket_id_fkey" FOREIGN KEY (ticket_id) REFERENCES public.tickets(ticket_id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+
+alter table "public"."todo_parents" validate constraint "todo_parents_ticket_id_fkey";
+
+alter table "public"."todo_parents" add constraint "todo_parents_todo_id_fkey" FOREIGN KEY (todo_id) REFERENCES public.todos(todo_id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+
+alter table "public"."todo_parents" validate constraint "todo_parents_todo_id_fkey";
 
 alter table "public"."todos" add constraint "todos_user_tenant_id_fkey" FOREIGN KEY (user_tenant_id) REFERENCES public.user_tenant(user_tenant_id) ON UPDATE CASCADE ON DELETE SET NULL not valid;
 
@@ -516,6 +542,48 @@ grant trigger on table "public"."todo_content" to "service_role";
 grant truncate on table "public"."todo_content" to "service_role";
 
 grant update on table "public"."todo_content" to "service_role";
+
+grant delete on table "public"."todo_parents" to "anon";
+
+grant insert on table "public"."todo_parents" to "anon";
+
+grant references on table "public"."todo_parents" to "anon";
+
+grant select on table "public"."todo_parents" to "anon";
+
+grant trigger on table "public"."todo_parents" to "anon";
+
+grant truncate on table "public"."todo_parents" to "anon";
+
+grant update on table "public"."todo_parents" to "anon";
+
+grant delete on table "public"."todo_parents" to "authenticated";
+
+grant insert on table "public"."todo_parents" to "authenticated";
+
+grant references on table "public"."todo_parents" to "authenticated";
+
+grant select on table "public"."todo_parents" to "authenticated";
+
+grant trigger on table "public"."todo_parents" to "authenticated";
+
+grant truncate on table "public"."todo_parents" to "authenticated";
+
+grant update on table "public"."todo_parents" to "authenticated";
+
+grant delete on table "public"."todo_parents" to "service_role";
+
+grant insert on table "public"."todo_parents" to "service_role";
+
+grant references on table "public"."todo_parents" to "service_role";
+
+grant select on table "public"."todo_parents" to "service_role";
+
+grant trigger on table "public"."todo_parents" to "service_role";
+
+grant truncate on table "public"."todo_parents" to "service_role";
+
+grant update on table "public"."todo_parents" to "service_role";
 
 grant delete on table "public"."todos" to "anon";
 
