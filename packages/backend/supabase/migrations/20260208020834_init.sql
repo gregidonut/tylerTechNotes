@@ -759,6 +759,24 @@ using ((EXISTS ( SELECT
 
 
   create policy "Enable insert for authenticated users only"
+  on "public"."todo_parents"
+  as permissive
+  for insert
+  to authenticated
+with check (true);
+
+
+
+  create policy "User can view their todo histories"
+  on "public"."todo_parents"
+  as permissive
+  for select
+  to authenticated
+using (true);
+
+
+
+  create policy "Enable insert for authenticated users only"
   on "public"."todos"
   as permissive
   for insert
